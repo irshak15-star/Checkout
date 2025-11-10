@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Pagamento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .payment-method {
+            flex: 1;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method:hover {
+            border-color: #2c5aa0;
+        }
+
+        .payment-method.selected {
+            border-color: #2c5aa0;
+            background: #f0f7ff;
+        }
+
+        .payment-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .payment-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="tel"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="tel"]:focus {
+            outline: none;
+            border-color: #2c5aa0;
+        }
+
+        .privacy {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 25px;
+        }
+
+        .pay-button {
+            width: 100%;
+            background: #2c5aa0;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .pay-button:hover {
+            background: #1e3d6f;
+        }
+
+        .pay-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2c5aa0;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result {
+            display: none;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .security-notice {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Pagamento</h1>
+            <div class="price">297 MT</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <div class="section-title">Metodo de Pagamento</div>
+                <div class="payment-methods">
+                    <div class="payment-method selected" data-method="mpesa">
+                        <div class="payment-icon">📱</div>
+                        <div class="payment-name">m-pesa</div>
+                    </div>
+                    <div class="payment-method" data-method="emola">
+                        <div class="payment-icon">💰</div>
+                        <div class="payment-name">e-Mola</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="form-group">
+                    <label for="phoneNumber">Numero de celular *</label>
+                    <input 
+                        type="tel" 
+                        id="phoneNumber" 
+                        placeholder="870424473"
+                        maxlength="9"
+                    >
+                </div>
+
+                <div class="privacy">
+                    Os seus dados pessoais serao utilizados para processar a sua compra, apoiar a sua experiencia em todo este site e para outros fins descritos na nossa politica de privacidade.
+                </div>
+
+                <button id="payButton" class="pay-button">
+                    Pagar 297 MT
+                </button>
+
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <div>Processando pagamento...</div>
+                </div>
+
+                <div id="result" class="result"></div>
+
+                <div class="security-notice">
+                    🔒 Todas transacoes sao seguras e encriptadas
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

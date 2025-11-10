@@ -1,0 +1,11 @@
+{
+  "name": "checkout-mpesa",
+  "version": "1.0.0",
+  "description": "Checkout M-PESA e e-Mola",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}
