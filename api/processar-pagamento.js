@@ -2,8 +2,8 @@
 const fetch = require('node-fetch');
 
 // ✅ SUAS CREDENCIAIS E2PAYMENTS
-const CLIENT_ID = "a04b5e54-3bf2-4e1e-9c33-e781c31c6d01";
-const CLIENT_SECRET = "LHYElDI7ZdKUSwsRRK6ypVYCwiOBnMEwmpSMOBf2";
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const WALLET_MPESA = "999773";
 const WALLET_EMOLA = "999774";
 
@@ -115,4 +115,5 @@ module.exports = async (req, res) => {
       details: err.message
     });
   }
+
 };
